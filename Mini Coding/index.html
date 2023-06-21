@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Konversi Suhu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-image: linear-gradient(aquamarine, magenta);
+      background-repeat: no-repeat;
+}
+    
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .input-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    
+    .input-container label {
+      flex: 1;
+      font-weight: bold;
+    }
+    
+    .input-container input {
+      flex: 2;
+      padding: 5px;
+    }
+    
+    .result {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .calculation {
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    .button-container button {
+      margin: 0 5px;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .input-container ::placeholder{
+        color: black;
+        
+    }
+  </style>
+</head>
+<body>
+  <h1>Konversi Suhu</h1>
+  
+  <div class="input-container">
+    <label>Celsius:</label>
+    <input type="number" id="celsiusInput" placeholder="Input The Celcius Number">
+  </div>
+  
+  <div class="input-container">
+    <label>Fahrenheit:</label>
+    <input type="number" id="fahrenheitInput" placeholder="Input The Fahrenheit Number">
+  </div>
+  
+  <div class="calculation" id="calculation"></div>
+  
+  <div class="result" id="result"></div>
+  
+  <div class="button-container">
+    <button onclick="resetConversion()">Reset</button>
+    <button onclick="reverseConversion()">Reverse</button>
+  </div>
+
+  <script>
+    function convertCelsiusToFahrenheit(celsius) {
+      return (celsius * 9/5) + 32;
+    }
+    
+    function convertFahrenheitToCelsius(fahrenheit) {
+      return (fahrenheit - 32) * 5/9;
+    }
+    
+    const celsiusInput = document.getElementById('celsiusInput');
+    const fahrenheitInput = document.getElementById('fahrenheitInput');
+    const resultElement = document.getElementById('result');
+    const calculationElement = document.getElementById('calculation');
+    
+    function resetConversion() {
+      celsiusInput.value = '';
+      fahrenheitInput.value = '';
+      resultElement.innerText = '';
+      calculationElement.innerText = '';
+    }
+    
+    function reverseConversion() {
+      const celsiusValue = celsiusInput.value;
+      const fahrenheitValue = fahrenheitInput.value;
+      
+      celsiusInput.value = fahrenheitValue;
+      fahrenheitInput.value = celsiusValue;
+      
+      convertCelsiusToFahrenheit(fahrenheitValue);
+      convertFahrenheitToCelsius(celsiusValue);
+    }
+    
+    celsiusInput.addEventListener('input', function() {
+      const celsiusValue = parseFloat(celsiusInput.value);
+      const fahrenheitValue = convertCelsiusToFahrenheit(celsiusValue);
+      fahrenheitInput.value = isNaN(fahrenheitValue) ? '' : fahrenheitValue.toFixed(2);
+      
+      calculationElement.innerText = `(${celsiusValue} °C × 9/5) + 32 = ${fahrenheitValue} °F`;
+    });
+    
+    fahrenheitInput.addEventListener('input', function() {
+      const fahrenheitValue = parseFloat(fahrenheitInput.value);
+      const celsiusValue = convertFahrenheitToCelsius(fahrenheitValue);
+      celsiusInput.value = isNaN(celsiusValue) ? '' : celsiusValue.toFixed(2);
+      
+      calculationElement.innerText = `(${fahrenheitValue} °F − 32) × 5/9 = ${celsiusValue} °C`;
+    });
+  </script>
+</body>
+</html>
